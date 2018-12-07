@@ -30,7 +30,7 @@
     </div>
   </div>
   <el-button type="primary" native-type="submit" :disabled="formSubmitted">Save</el-button>
-  <div if="formSubmitted">
+  <div v-if="formSubmitted">
       Submitted Successfully!
   </div>
 
@@ -42,11 +42,8 @@
 <script>
 import axios from "axios";
 import Vue from "vue";
-import Datetime from "vue-datetime";
-import "vue-datetime/dist/vue-datetime.css";
 import { Select, Button, DatePicker } from "element-ui";
 
-Vue.use(Datetime);
 Vue.component(Select.name, Select);
 Vue.component(Button.name, Button);
 Vue.component(Option.name, Option);
@@ -96,7 +93,7 @@ export default {
         console.log(i);
         console.log(this.insuranceFields.fields);
         const field = this.insuranceFields.fields[i];
-        const fieldValue = this.formFields[field.id];
+        let fieldValue = this.formFields[field.id];
         if (fieldValue == null || fieldValue == "") {
           this.errors.push("Field is null: " + field.name);
         }
@@ -111,7 +108,10 @@ export default {
       }
       if (this.errors.length == 0) {
         axios
-          .post("https://2lmqgnfs2l.execute-api.us-east-1.amazonaws.com/dev/userData/", data)
+          .post(
+            "https://2lmqgnfs2l.execute-api.us-east-1.amazonaws.com/dev/userData/",
+            data
+          )
           .then(res => {
             this.formSubmitted = true;
             console.log(res);

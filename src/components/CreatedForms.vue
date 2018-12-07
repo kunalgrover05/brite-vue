@@ -13,24 +13,29 @@
 
 <script>
 import axios from "axios";
-import router from 'vue-router';
+import router from "vue-router";
 
 export default {
-    name: 'CreatedForms',
-    data() {
-        return {
-            completedForms: [
-                ]
+  name: "CreatedForms",
+  data() {
+    return {
+      completedForms: []
+    };
+  },
+  mounted() {
+    axios
+      .get(
+        "https://2lmqgnfs2l.execute-api.us-east-1.amazonaws.com/dev/userData/"
+      )
+      .then(
+        result => {
+          this.completedForms = result.data;
+          console.log(result);
+        },
+        error => {
+          console.error(error);
         }
-    },
-    mounted() {
-            axios.get("https://2lmqgnfs2l.execute-api.us-east-1.amazonaws.com/dev/userData/").then(result => {
-                this.completedForms = result.data;
-                console.log(result);
-            }, error => {
-                console.error(error);
-            });
-        }
-
-}
+      );
+  }
+};
 </script>
