@@ -1,28 +1,56 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import CreateForm from './components/CreateForm';
+import LandingPage from './components/LandingPage';
+import CreatedForms from './components/CreatedForms';
+import lang from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale'
+
+const router = new VueRouter({
+    routes: [
+        {
+            path: "/",
+            name: 'LandingPage',
+            component: LandingPage
+        },
+        {
+            path: "/createdForms",
+            name: 'CreatedForms',
+            component: CreatedForms
+        },
+        {
+            path: '/form/:id',
+            name: 'CreateForm',
+            component: CreateForm
+        }
+    ]
+})
+
+Vue.use(VueRouter);
+Vue.use(ElementUI);
+
+// configure language
+locale.use(lang)
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
-  }
+    CreateForm,
+    LandingPage
+  },
+  router: router
 }
+
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
